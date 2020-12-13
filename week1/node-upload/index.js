@@ -2,6 +2,7 @@ const express = require("express");
 const bodyPasrser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
+const fs = require("fs");
 
 const app = express();
 app.get("/", (req, res) => {
@@ -15,6 +16,9 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 const upload = multer({
   storage: multer.diskStorage({
     destination: (req, file, cb) => {
+        if (!fs.existsSync(path.join(__dirname, 'uploads'))) {
+          fs.mkdirSync(path.join(__dirname, 'uploads'))
+        }
         cb(null, 'uploads')
     },
     filename: (req, file, cb) => {
