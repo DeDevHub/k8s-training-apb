@@ -49,11 +49,10 @@
 // @ is an alias to /src
 import axios from "axios";
 
-const baseUrl = process.env.VUE_APP_UPLOAD_API_URL || "http://localhost:9090";
-
 export default {
   components: {},
   data: () => ({
+    baseUrl: process.env.VUE_APP_UPLOAD_API_URL || "http://localhost:8080",
     files: [],
     newFile: null,
   }),
@@ -65,7 +64,7 @@ export default {
       const formData = new FormData();
       formData.append("image", this.newFile);
       const resposne = await axios.post(
-        `${baseUrl}/upload`,
+        `${this.baseUrl}/upload`,
         formData
       );
       if (resposne.status === 200) {
@@ -75,12 +74,12 @@ export default {
     },
     async loadImages() {
       const resposne = await axios.get(
-        `${baseUrl}/uploads`
+        `${this.baseUrl}/uploads`
       );
       if (resposne.status === 200) {
         this.files = [
           ...resposne.data.map(
-            (item) => `${baseUrl}/uploads/${item}`
+            (item) => `${this.baseUrl}/uploads/${item}`
           ),
         ];
       }

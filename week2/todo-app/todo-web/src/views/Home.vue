@@ -103,10 +103,9 @@
 // @ is an alias to /src
 import axios from "axios";
 
-const baseUrl = process.env.VUE_APP_TODO_API_URL || "http://localhost:9090";
-
 export default {
   data: () => ({
+    baseUrl: process.env.VUE_APP_TODO_API_URL || "http://localhost:9090",
     todos: [],
     newTodo: null,
   }),
@@ -129,7 +128,7 @@ export default {
 
   methods: {
     async saveTodo() {
-      const response = await axios.post(`${baseUrl}/todos`, {
+      const response = await axios.post(`${this.baseUrl}/todos`, {
         text: this.newTodo,
       });
       if (response.status === 200) {
@@ -138,14 +137,14 @@ export default {
       }
     },
     async getTodos() {
-      const response = await axios.get(`${baseUrl}/todos`);
+      const response = await axios.get(`${this.baseUrl}/todos`);
       if (response.status === 200) {
         this.todos = [...response.data];
       }
     },
     async editTodo(index) {
       const todo = { ...this.todos[index] };
-      const response = await axios.put(`${baseUrl}/todos/${todo.id}`, {
+      const response = await axios.put(`${this.baseUrl}/todos/${todo.id}`, {
         text: todo.text,
         status: todo.status,
       });
