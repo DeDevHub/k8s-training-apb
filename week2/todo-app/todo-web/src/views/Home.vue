@@ -154,7 +154,7 @@ export default {
     },
     async deleteTodo(index) {
       const todo = { ...this.todos[index] };
-      const response = await axios.delete(`${baseUrl}/todos/${todo.id}`);
+      const response = await axios.delete(`${this.baseUrl}/todos/${todo.id}`);
       if (response.status === 200) {
         this.getTodos();
       }
