@@ -1,14 +1,22 @@
 version: "3.8"
 services:
+  todo-web:
+    image: todo-web:v0.0.01
+    links:
+      - todo-api:todo-api
+    ports:
+      - 80:80
+    environment:
+      VUE_APP_TODO_API_URL: http://todo-api:9090
+      VUE_APP_UPLOAD_API_URL: host.docker.internal:8080
   todo-api:
-    build: ./todo-api
+    image: todo-api:v0.0.01
     depends_on:
       - mysql
     links:
       - mysql:mysql
     ports:
       - 9090:9090
-    # command: ["./wait-for-it.sh", "mysql:3306", "--", "npm", "start"]
     restart: always
     environment:
       port: 9090
@@ -18,15 +26,12 @@ services:
       todo_db_user: todo
       todo_db_password: todo
   mysql:
-    build: ./todo-db
+    image: mysql
     ports:
       - 3306:3306
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: todo
-      MYSQL_PASSWORD: todo
       MYSQL_DATABASE: todo
-      # MYSQL_ROOT_HOST: 192.168.0.48/255.255.255.248
     volumes:
       - ./todo-db/init-sql:/docker-entrypoint-initdb.d
       - ./todo-db/mysql-data:/var/lib/mysql
