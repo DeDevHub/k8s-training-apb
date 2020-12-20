@@ -1,12 +1,32 @@
 version: "3.8"
 services:
+  todo-api:
+    build: ./todo-api
+    depends_on:
+      - mysql
+    links:
+      - mysql:mysql
+    ports:
+      - 9090:9090
+    # command: ["./wait-for-it.sh", "mysql:3306", "--", "npm", "start"]
+    restart: always
+    environment:
+      port: 9090
+      todo_db_host: mysql
+      todo_db_port: 3306
+      todo_db_scheme: todo
+      todo_db_user: todo
+      todo_db_password: todo
   mysql:
-    image: mysql
+    build: ./todo-db
     ports:
       - 3306:3306
     environment:
-      MYSQL_DATABASE: todo
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: todo
+      MYSQL_PASSWORD: todo
+      MYSQL_DATABASE: todo
+      # MYSQL_ROOT_HOST: 192.168.0.48/255.255.255.248
     volumes:
       - ./todo-db/init-sql:/docker-entrypoint-initdb.d
       - ./todo-db/mysql-data:/var/lib/mysql
