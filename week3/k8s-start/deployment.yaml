@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: node-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: node-app-test
+  template:
+    metadata:
+      labels:
+        app: node-app-test
+    spec:
+      containers:
+        - name: node-app
+          image: khatthaphone/node-app
+          imagePullPolicy: Always
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+            periodSeconds: 10
+            initialDelaySeconds: 5
+            failureThreshold: 3
+            timeoutSeconds: 5

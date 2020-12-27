@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   todo-web:
-    image: todo-web:v0.0.01
+    image: todo-web:v0.1.01
     links:
       - todo-api:todo-api
     ports:
@@ -10,7 +10,7 @@ services:
       VUE_APP_TODO_API_URL: http://todo-api:9090
       VUE_APP_UPLOAD_API_URL: host.docker.internal:8080
   todo-api:
-    image: todo-api:v0.0.01
+    image: todo-api:v0.1.01
     depends_on:
       - mysql
     links:
@@ -34,4 +34,10 @@ services:
       MYSQL_DATABASE: todo
     volumes:
       - ./todo-db/init-sql:/docker-entrypoint-initdb.d
-      - ./todo-db/mysql-data:/var/lib/mysql
+      - mysql-data:/var/lib/mysql
+    networks: 
+      - todo-net
+volumes:
+ - mysql-data
+networks:
+ - todo-net
