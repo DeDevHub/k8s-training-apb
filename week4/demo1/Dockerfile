@@ -7,7 +7,7 @@
 #ENTRYPOINT ["sh", "-c"]
 #CMD ["exec java -jar $APP_FILE"]
 
-FROM openjdk:8u212-jdk-alpine
+#FROM openjdk:8u212-jdk-alpine
 #
 #LABEL maintainer="khamphai@ldblao.com"
 #ENV APP_FILE demo1-0.0.1-SNAPSHOT.jar
@@ -20,11 +20,11 @@ FROM openjdk:8u212-jdk-alpine
 #ENTRYPOINT ["java", "-Dspring.application.name=demo 1", "-jar", "demo-service-1.jar"]
 
 
-#FROM openjdk:11-jdk
+FROM openjdk:11-jdk
 
 # Set timezone
 # Always have Bangkok timezone file beside Dockerfile
-#RUN echo "Asia/Bangkok" > /etc/timezone && date
+RUN echo "Asia/Bangkok" > /etc/timezone && date
 
 ENV APP_HOME /usr/apps
 WORKDIR $APP_HOME
