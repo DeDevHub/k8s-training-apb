@@ -1,0 +1,8 @@
+spring:
+  application:
+    name: demo2-service
+  profiles:
+    active: ${PROFILE_ACTIVE:dev}
+
+server:
+  port: ${DEMO1_PORT:8083}
