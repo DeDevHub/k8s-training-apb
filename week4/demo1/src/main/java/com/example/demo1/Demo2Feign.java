@@ -12,4 +12,7 @@ public interface Demo2Feign {
 
     @GetMapping("/demo2")
     String hello();
+
+    @GetMapping("/key")
+    String key();
 }

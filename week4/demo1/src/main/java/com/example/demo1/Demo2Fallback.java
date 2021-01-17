@@ -20,6 +20,16 @@ public class Demo2Fallback implements FallbackFactory<Demo2Feign> {
 
                 return "FallbackFactory Error";
             }
+
+            @Override
+            public String key() {
+                if (throwable instanceof FeignException && ((FeignException) throwable).status() == 404) {
+                    // Treat the HTTP 404 status
+                    return "Key ==> Treat the HTTP 404 status";
+                }
+
+                return "Key ==> FallbackFactory Error";
+            }
         };
     }
 }
