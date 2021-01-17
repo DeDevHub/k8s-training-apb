@@ -1,4 +1,4 @@
-FROM openjdk:11-jdk
+FROM openjdk:8u212-jdk-alpine
 
 # Set timezone
 # Always have Bangkok timezone file beside Dockerfile
