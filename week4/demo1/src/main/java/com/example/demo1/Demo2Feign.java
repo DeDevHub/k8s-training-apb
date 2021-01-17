@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @FeignClient(
         name = "demo2-service",
-        url = "http://demo-ingress.default.192.53.168.118.xip.io",
+        url = "${feign.demo2.url}",
         fallbackFactory = Demo2Fallback.class
 )
 public interface Demo2Feign {
